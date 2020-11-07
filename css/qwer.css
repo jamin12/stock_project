@@ -14,8 +14,12 @@ header{
     top: 0;
     right: 0;
     left: 0;
+    background-color: #fff;
 }
 
+main{
+    margin-top: 108px;
+}
 .Mservice-stock{
     display: block;
     width: 100%;
