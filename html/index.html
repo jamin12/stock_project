@@ -7,7 +7,19 @@
     <link rel="stylesheet" href="../css/qwer.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src = "../js/asdf.js"></script>
-
+    <script>
+        $(()=>{
+            $("#header-search-btn").click(()=>{
+                $.ajax({
+                    url : "../python_data/news_scraping.py",
+                    method : "GET",
+                    dataType : "text"
+                }).done(()=>{
+                    $("#main_stock_news_ul").append("<li>hihi</li>");
+                })
+            });
+        });
+    </script>
 
 </head>
 <body>
