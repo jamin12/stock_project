@@ -3,14 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from PIL import Image as pilimg
-from flask import Flask
 
-app = Flask(__name__)
-
-
-@app.route("../html/index.html")
-def test():
-    return "<h1>hihi</h1>"
 #requests로 접속하는 방법
 def into_request(url):
     #유저 에이전트
@@ -72,12 +65,11 @@ class stock_info:
         #     image_res.append(requests.get(news_image))
         #     image_res[idx].raise_for_status()
         # 뉴스 타이틀 반환
-        # yield news_title
+        yield news_title
         # 뉴스 내용 반환
-        # yield news_content
+        yield news_content
         # 뉴스 이미지 반환
         # yield image_res
-        return [news_title, news_content]
 
     #주식 정보 가저오기
     def securities_information(self):

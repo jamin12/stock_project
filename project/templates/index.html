@@ -7,19 +7,7 @@
     <link rel="stylesheet" href="../css/qwer.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src = "../js/asdf.js"></script>
-    <script>
-        $(()=>{
-            $("#header-search-btn").click(()=>{
-                $.ajax({
-                    url : "../python_data/news_scraping.py",
-                    method : "GET",
-                    dataType : "text"
-                }).done(()=>{
-                    $("#main_stock_news_ul").append("<li>hihi</li>");
-                })
-            });
-        });
-    </script>
+
 
 </head>
 <body>
@@ -55,10 +43,9 @@
     <main>
         <div class="main_stock_news">
             <ul class="main_stock_news_ul">
-                <li></li>
-                <li class="box">asdf1</li>
-                <li class="box">asdf2</li>
-                <li class="box">asdf3</li>
+                {% for i in news_title%}
+                <li>{{news_title}}</li>
+                {% endfor %}
             </ul>
         </div>
     </main>
