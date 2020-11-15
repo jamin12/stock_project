@@ -10,10 +10,10 @@ def get_news():
     news_info = stock_news.stock_news()
     news_title = next(news_info)
     news_contant = next(news_info)
+    news = [news_title,news_contant]
 
-    return render_template('index.html',news_title = news_title)
+    return render_template('index.html',news = news)
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-    

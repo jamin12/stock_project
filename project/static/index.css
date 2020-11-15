@@ -15,6 +15,7 @@ header{
     right: 0;
     left: 0;
     background-color: #fff;
+    z-index: 10;
 }
 
 main{
@@ -115,7 +116,6 @@ main{
     width: 1130px;
     margin: 0 auto;
     border: 1px solid #f1f4f6;
-
 }
 
 .main_stock_news .main_stock_news_ul{

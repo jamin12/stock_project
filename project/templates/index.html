@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나의 주식 정보 보기</title>
-    <link rel="stylesheet" href="../css/qwer.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='index.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src = "../js/asdf.js"></script>
-
 
 </head>
 <body>
@@ -43,8 +41,10 @@
     <main>
         <div class="main_stock_news">
             <ul class="main_stock_news_ul">
-                {% for i in news_title%}
+                {% for news_title in news[0] %}
                 <li>{{news_title}}</li>
+                <li>{{news[1][loop.index-1]}}</li>
+                <br>
                 {% endfor %}
             </ul>
         </div>
