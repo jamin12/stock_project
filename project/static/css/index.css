@@ -60,6 +60,7 @@ main{
 .header-mypage strong{
     font-size: 25px;
     margin: 0;
+    padding: 0 9px 0 0;
 }
 
 /* ============================================== */
@@ -92,7 +93,7 @@ main{
 
 .header-btn-icon{
     display: inline-block;
-    background-image: url(../img/search_icon.png);
+    background-image: url('../img/search_icon.png');
     background-size: 34px 34px;
     background-position: 0px 0px;
     background-repeat: no-repeat;
@@ -121,9 +122,14 @@ main{
 .main_stock_news .main_stock_news_ul{
     list-style: none;
     padding: 0px;
+    margin: 0;
 }
 
 .main_stock_news .box{
     padding: 15px 20px 18px;
     border-top: 1px solid #f1f4f6;
+}
+.news-link{
+    text-decoration: none;
+    color: black;
 }

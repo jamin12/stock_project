@@ -51,6 +51,7 @@ class stock_info:
         picks = pick_news.find_all("li",attrs = {"id": re.compile(r"sp_nws\d?")})
         news_title = []
         news_content = []
+        news_link = []
         # image_res = []
         for idx,pick in enumerate(picks):
             #뉴스 타이틀
@@ -64,12 +65,16 @@ class stock_info:
         #TODO 16진수 이미지 파일 읽기
         #     image_res.append(requests.get(news_image))
         #     image_res[idx].raise_for_status()
+        #뉴스 링크
+            news_link.append(pick.find("a")["href"])
         # 뉴스 타이틀 반환
         yield news_title
         # 뉴스 내용 반환
         yield news_content
         # 뉴스 이미지 반환
         # yield image_res
+        #뉴스 링크 반환
+        yield news_link
 
     #주식 정보 가저오기
     def securities_information(self):
@@ -151,13 +156,10 @@ if __name__ == "__main__":
     b = a.stock_news()
     c = next(b)
     d = next(b)
-    for i in c:
+    f = next(b)
+    for i in f:
         print(i)
         break
-    for i in d:
-        print(i)
-        break
-    print("hh")
     
     # a.securities_information()
     
