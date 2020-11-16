@@ -6,7 +6,10 @@
     <title>나의 주식 정보 보기</title>
     <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../static/js/index.js"></script>
+    <script>
 
+    </script>
 </head>
 <body>
     <header>
@@ -27,10 +30,12 @@
             </div>
             <div class="header-second-line">
                 <div class="header-search">
-                    <input id="header-search-input" type="text"/>
-                    <button id="header-search-btn">
-                        <span class="header-btn-icon"></span>
-                    </button>
+                    <form action ="\" method="GET">
+                        <input id="header-search-input" type="text" name = "test"/>
+                        <button id="header-search-btn" type="submit">
+                            <span class="header-btn-icon"></span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -41,7 +46,11 @@
     <main>
         <div class="main_stock_news">
             <div id="align-categori">
-
+                <form action="\" method="GET">
+                    <button type="submit" value="0" name="align-keyword" class="keyword">관련도 순</button>
+                    <button type="submit" value="1" name="align-keyword" class="keyword">최신 순</button>
+                    <button class="blind" value="{{align_crite}}"></button>
+                </form>
             </div>
             <div>
                 <ul class="main_stock_news_ul">
