@@ -51,20 +51,21 @@ class stock_info:
         picks = pick_news.find_all("li",attrs = {"id": re.compile(r"sp_nws\d?")})
         news_title = []
         news_content = []
+        image_res = []
         news_link = []
-        # image_res = []
         for idx,pick in enumerate(picks):
             #뉴스 타이틀
             news_title.append(pick.find("a",attrs = {"class" : "news_tit"}).get_text())
             #뉴스 내용  
             news_content.append(pick.find("a",attrs = {"class" : "api_txt_lines dsc_txt_wrap"}).get_text())
             #이미지 가져오기
-        #     news_image = pick.find("img")["src"]
-        #     if news_image.startswith("//"):
-        #         news_image = "https:" + news_image
+            news_image = pick.find("img")["src"]
+            if news_image.startswith("//"):
+                news_image = "https:" + news_image
         #TODO 16진수 이미지 파일 읽기
-        #     image_res.append(requests.get(news_image))
-        #     image_res[idx].raise_for_status()
+            image_res.append(requests.get(news_image))
+            image_res[idx].raise_for_status()
+
         #뉴스 링크
             news_link.append(pick.find("a")["href"])
         # 뉴스 타이틀 반환
@@ -72,7 +73,7 @@ class stock_info:
         # 뉴스 내용 반환
         yield news_content
         # 뉴스 이미지 반환
-        # yield image_res
+        yield image_res
         #뉴스 링크 반환
         yield news_link
 

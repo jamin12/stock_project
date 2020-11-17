@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나의 주식 정보 보기</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/news.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/header.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../static/js/index.js"></script>
@@ -45,7 +45,27 @@
         </div>
     </header>
     <main>
-        {{img}}
+        <div class="main_stock_news">
+            <div id="align-categori">
+                <!-- TODO : 색으로 표시하기 -->
+                <form action="\my_news" method="GET">
+                    <button type="submit" value="0" name="align-keyword" class="keyword">관련도 순</button>
+                    <button type="submit" value="1" name="align-keyword" class="keyword">최신 순</button>
+                    <button class="blind" value="{{align_crite}}"></button>
+                </form>
+            </div>
+            <div>
+                <ul class="main_stock_news_ul">
+                    <!-- TODO: 이미지 넣기 -->
+                    {% for news_info in news[0] %}
+                    <li class="box">
+                        <a href="{{news[2][loop.index-1]}}" class="news-link" target="_blank"><strong id="news-title">{{news_info}}</strong><br>{{news[1][loop.index-1]}}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </main>
 </body>
 </html>
