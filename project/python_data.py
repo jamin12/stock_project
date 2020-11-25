@@ -38,30 +38,33 @@ def into_selenium(url):
 def stock_news(stock_name,stock_ailgn):
     #TODO : 정렬 기준 : 0 관련도순, 1 최신순
     url = f"https://search.naver.com/search.naver?where=news&query={stock_name}&sm=tab_srt&sort={stock_ailgn}&photo=0&field=0&reporter_article=&pd=0&ds=&de=&docid=&nso=so%3Ar%2Cp%3Aall%2Ca%3Aall&mynews=0&refresh_start=0&related=0"
-    soup = into_request(url)
-    #전체 뉴스 목록 가져오기
-    all_news = soup.find("div", attrs = {"class" : "group_news"})
-    pick_news = all_news.find("ul", attrs = {"class":"list_news"})
-    #뉴스 고르기
-    picks = pick_news.find_all("li",attrs = {"id": re.compile(r"sp_nws\d?")})
     news_title = []
     news_content = []
     # image_res = []
     news_link = []
-    for idx,pick in enumerate(picks):
-        #뉴스 타이틀
-        news_title.append(pick.find("a",attrs = {"class" : "news_tit"}).get_text())
-        #뉴스 내용  
-        news_content.append(pick.find("a",attrs = {"class" : "api_txt_lines dsc_txt_wrap"}).get_text())
-        #이미지 가져오기
-    #     news_image = pick.find("img")["src"]
-    #     if news_image.startswith("//"):
-    #         news_image = "https:" + news_image
-    # #TODO 16진수 이미지 파일 읽기
-    #     image_res.append(requests.get(news_image))
-    #     image_res[idx].raise_for_status()
-    #뉴스 링크
-        news_link.append(pick.find("a")["href"])
+    try:
+        soup = into_request(url)
+        #전체 뉴스 목록 가져오기
+        all_news = soup.find("div", attrs = {"class" : "group_news"})
+        pick_news = all_news.find("ul", attrs = {"class":"list_news"})
+        #뉴스 고르기
+        picks = pick_news.find_all("li",attrs = {"id": re.compile(r"sp_nws\d?")})
+        for idx,pick in enumerate(picks):
+            #뉴스 타이틀
+            news_title.append(pick.find("a",attrs = {"class" : "news_tit"}).get_text())
+            #뉴스 내용  
+            news_content.append(pick.find("a",attrs = {"class" : "api_txt_lines dsc_txt_wrap"}).get_text())
+            #이미지 가져오기
+        #     news_image = pick.find("img")["src"]
+        #     if news_image.startswith("//"):
+        #         news_image = "https:" + news_image
+        # #TODO 16진수 이미지 파일 읽기
+        #     image_res.append(requests.get(news_image))
+        #     image_res[idx].raise_for_status()
+        #뉴스 링크
+            news_link.append(pick.find("a")["href"])
+    except:
+        pass
     # 뉴스 타이틀 반환
     yield news_title
     # 뉴스 내용 반환

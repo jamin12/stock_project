@@ -17,18 +17,16 @@ def index():
 @app.route('/my_news')
 def get_news():
     global save_name
+    align_crite = 0
+    company_name = save_name
     #Default값 설정
-    if request.args.get("align-keyword"):
-        #정렬 기준
+    #정렬 기준
+    try:
         align_crite = int(request.args.get("align-keyword"))
-    else:
-        align_crite = 0
-    
-    if request.args.get("search-company"):
         company_name = request.args.get("search-company")
         save_name = company_name
-    else:
-        company_name = save_name
+    except:
+        pass
 
     # 정보 가져와서 뿌리기
     stock_news = python_data.stock_news(company_name,align_crite)

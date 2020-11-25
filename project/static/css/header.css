@@ -1,5 +1,6 @@
 *{
     box-sizing: border-box;
+    background-color: #D9B191;
 }
 
 h1{
@@ -14,12 +15,11 @@ header{
     top: 0;
     right: 0;
     left: 0;
-    background-color: #fff;
     z-index: 10;
 }
 
 main{
-    margin-top: 108px;
+    margin-top: 120px;
 }
 
 .Mservice-stock{
@@ -80,8 +80,6 @@ main{
     height: 35px;
     top: 0;
     right: 0;
-    background-color: #fff;
-    /* border-style: ; */
     border-color: black;
     padding: 0;
 }

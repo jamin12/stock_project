@@ -1,7 +1,3 @@
-*{
-    box-sizing: border-box;
-}
-
 .main_stock_news{
     position: relative;
     width: 1130px;
@@ -26,7 +22,7 @@
 }
 
 .main_stock_news .keyword{
-    background-color: white;
+
     border: 0;
     font-size: 20px;
     cursor: pointer;
@@ -49,4 +45,5 @@
 
 #news-title{
     color: rgb(28, 138, 146);
+
 }
