@@ -45,7 +45,7 @@ def stock_news(stock_name,stock_ailgn):
     try:
         soup = into_request(url)
         #전체 뉴스 목록 가져오기
-        all_news = soup.find("div", attrs = {"class" : "group_news"})
+        all_news = soup.find("div", attrs = {"class" : "group_news"})  
         pick_news = all_news.find("ul", attrs = {"class":"list_news"})
         #뉴스 고르기
         picks = pick_news.find_all("li",attrs = {"id": re.compile(r"sp_nws\d?")})
@@ -74,7 +74,6 @@ def stock_news(stock_name,stock_ailgn):
     #뉴스 링크 반환
     yield news_link
     
-
 
 
 if __name__ == "__main__":
