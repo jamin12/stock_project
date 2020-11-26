@@ -78,7 +78,7 @@ def stock_news(stock_name,stock_ailgn):
 
 if __name__ == "__main__":
     stock_news("삼성전자",0)
-    # apap
+    
     # a.securities_information()
     
     
