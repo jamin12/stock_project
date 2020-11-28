@@ -5,16 +5,17 @@
     margin: 0 auto;
 }
 
-#main-contant .mystock-ul{
-    list-style: none;
+.mystock-slide{
+    display: none;
 }
 
-#main-contant .mystock-li{
-    margin-top: 120px;
+.next-slide, .prev-slide{
+    display: inline;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
-#main-contant .mystock-btn{
-    width: 250px;
-    height: 250px;
-    margin: 0 20px 0 137px;
-}
+
+
+
