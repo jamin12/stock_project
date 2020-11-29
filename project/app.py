@@ -22,9 +22,13 @@ def get_news():
     #Default값 설정
     #정렬 기준
     try:
-        align_crite = int(request.args.get("align-keyword"))
         company_name = request.args.get("search-company")
         save_name = company_name
+    except:
+    # TODO: 검색 정보가 없습니다. 설정
+        pass
+    try:
+        align_crite = int(request.args.get("align-keyword"))
     except:
         pass
 
