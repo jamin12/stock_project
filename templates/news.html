@@ -56,7 +56,6 @@
             </div>
             <div>
                 <ul class="main_stock_news_ul">
-                    <!-- TODO: 이미지 넣기 -->
                     {% for news_info in news[0] %}
                     <li class="box">
                         <a href="{{news[2][loop.index-1]}}" class="news-link" target="_blank"><strong id="news-title">{{news_info}}</strong><br>{{news[1][loop.index-1]}}
