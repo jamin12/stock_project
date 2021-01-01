@@ -146,7 +146,7 @@ if __name__ == '__main__':
         if score_criteria2 > 3:
             score = score + 3
             score_criteria2 = 0
-        # if PER
+        
     print(score)
     
         
