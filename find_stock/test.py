@@ -148,6 +148,7 @@ if __name__ == '__main__':
             score_criteria2 = 0
         # if PER
     print(score)
+    
         
 
 
