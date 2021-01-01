@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 import pyautogui
 import time
 from openpyxl import load_workbook
+import re
 
 #selenium으로 접속하는 방법
 def into_selenium(url):
@@ -40,10 +41,10 @@ if __name__ == '__main__':
     operating_profit = []
     net_profit = []
     for i in range(2,7):
-        total_sales.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[1]/td[{i}]').text)
-        profit_sales.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[26]/td[{i}]').text)
-        operating_profit.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[58]/td[{i}]').text)
-        net_profit.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[218]/td[{i}]').text)
+        total_sales.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[1]/td[{i}]').text).replace(',',''))
+        profit_sales.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[26]/td[{i}]').text).replace(',',''))
+        operating_profit.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[58]/td[{i}]').text).replace(',',''))
+        net_profit.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[218]/td[{i}]').text).replace(',',''))
 
     #재무 상태표
     broswer.find_element_by_id("rpt_tab2").click()
@@ -56,12 +57,12 @@ if __name__ == '__main__':
     current_liabilities = []
     surplus_profit = []
     for i in range(2,7):
-        total_assets.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[1]/td[{i}]').text)
-        liquid_assets.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[2]/td[{i}]').text)
-        cash_assets.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[47]/td[{i}]').text)
-        total_debt.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[127]/td[{i}]').text)
-        current_liabilities.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[127]/td[{i}]').text)
-        surplus_profit.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[243]/td[{i}]').text)
+        total_assets.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[1]/td[{i}]').text).replace(',',''))
+        liquid_assets.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[2]/td[{i}]').text).replace(',',''))
+        cash_assets.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[47]/td[{i}]').text).replace(',',''))
+        total_debt.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[127]/td[{i}]').text).replace(',',''))
+        current_liabilities.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[127]/td[{i}]').text).replace(',',''))
+        surplus_profit.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[243]/td[{i}]').text).replace(',',''))
 
     #현금 흐름표
     broswer.find_element_by_id("rpt_tab3").click()
@@ -71,9 +72,9 @@ if __name__ == '__main__':
     investment_activities = []
     financial_activities = []
     for i in range(2,7):
-        business_activities.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[1]/td[{i}]').text)
-        investment_activities.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[144]/td[{i}]').text)
-        financial_activities.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[242]/td[{i}]').text)
+        business_activities.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[1]/td[{i}]').text).replace(',',''))
+        investment_activities.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[144]/td[{i}]').text).replace(',',''))
+        financial_activities.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[242]/td[{i}]').text).replace(',',''))
 
     broswer.get(f"https://navercomp.wisereport.co.kr/v2/company/c1040001.aspx?cmp_cd={stock_code}&cn=")
     #EPS, PER, EV_EBITDA, PSR, PBR, INDUSTRIES_AVG_PER
@@ -82,13 +83,13 @@ if __name__ == '__main__':
     EV_EBITDA = []
     PSR = []
     PBR = []
-    industries_avg = broswer.find_element_by_xpath('/html/body/div/form/div[1]/div/div[2]/div[1]/div/table/tbody/tr[3]/td/dl/dt[4]/b').text
+    industries_avg = (broswer.find_element_by_xpath('/html/body/div/form/div[1]/div/div[2]/div[1]/div/table/tbody/tr[3]/td/dl/dt[4]/b').text).replace(',','')
     for i in range(2,7):
-        EPS.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[1]/td[{i}]').text)
-        PER.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[17]/td[{i}]').text)
-        EV_EBITDA.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[29]/td[{i}]').text)
-        PSR.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[26]/td[{i}]').text)
-        PBR.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[17]/td[{i}]').text)
+        EPS.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[1]/td[{i}]').text).replace(',',''))
+        PER.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[17]/td[{i}]').text).replace(',',''))
+        EV_EBITDA.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[29]/td[{i}]').text).replace(',',''))
+        PSR.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[26]/td[{i}]').text).replace(',',''))
+        PBR.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[9]/table[2]/tbody/tr[17]/td[{i}]').text).replace(',',''))
 
     #수익성
     broswer.find_element_by_id("val_td1").click()
@@ -98,9 +99,9 @@ if __name__ == '__main__':
     net_profit_rate = []
     ROE = []
     for i in range(2,7):
-        operating_profit_ratio.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[4]/td[{i}]').text)
-        net_profit_rate.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[7]/td[{i}]').text)
-        ROE.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[13]/td[{i}]').text)
+        operating_profit_ratio.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[4]/td[{i}]').text).replace(',',''))
+        net_profit_rate.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[7]/td[{i}]').text).replace(',',''))
+        ROE.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[13]/td[{i}]').text).replace(',',''))
 
     #안전성
     #부채비율, 유동부채 비율, 순 부채 비율, 유동 비율, 당좌비율
@@ -112,18 +113,43 @@ if __name__ == '__main__':
     current_rate = []
     current_account_ratio = []
     for i in range(2,7):
-        debt_ratio.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[1]/td[{i}]').text)
-        current_liability_ratio.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[4]/td[{i}]').text)
-        net_debt_ratio.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[10]/td[{i}]').text)
-        current_rate.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[13]/td[{i}]').text)
-        current_account_ratio.append(broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[16]/td[{i}]').text)
+        debt_ratio.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[1]/td[{i}]').text).replace(',',''))
+        current_liability_ratio.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[4]/td[{i}]').text).replace(',',''))
+        net_debt_ratio.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[10]/td[{i}]').text).replace(',',''))
+        current_rate.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[13]/td[{i}]').text).replace(',',''))
+        current_account_ratio.append((broswer.find_element_by_xpath(f'/html/body/div/form/div[1]/div/div[2]/div[3]/div/div/div[5]/table[2]/tbody/tr[16]/td[{i}]').text).replace(',',''))
     
     
+
     #평가기준
+    score = 0
+    score_criteria1 = False #단순 체크
+    score_criteria2 = 0 # 몇년간 상승했는지 체크
     for i in range(4):
-        #매출액이 매년 상승 했는지
-        if total_sales[i] < total_sales[i+1]:
-            pass
+        #순 부채 비율이 30%이하 인지
+        if float(net_debt_ratio[i+1]) < 30:
+            score_criteria1 = True
+        else:
+            score_criteria1 = False
+        if score_criteria1:
+            score = score + 3
+        #투자활동 활동과 재무활동이 모두 + 인지
+        if float(investment_activities[i+1]) > 0 and float(financial_activities[i+1]) > 0:
+            score_criteria1 = False
+        else:
+            score_criteria1 = True
+        if score_criteria1:
+            score = score + 3
+        # EPS와 ROE가 꾸준히 오르는가
+        if float(EPS[i]) < float(EPS[i+1]) or float(ROE[i]) < float(ROE[i+1]):
+            score_criteria2 = score_criteria2 + 1
+        if score_criteria2 > 3:
+            score = score + 3
+            score_criteria2 = 0
+        # if PER
+    print(score)
+        
+
 
 
 
