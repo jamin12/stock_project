@@ -28,7 +28,7 @@ if __name__ == '__main__':
     ws = wb.active
     stock_code = ""
     for stocknum in ws.iter_rows(min_row=1):
-        if "삼성전자" == stocknum[0].value:
+        if "유니퀘스트" == stocknum[0].value:
             stock_code = str(stocknum[4].value)
             break
     
@@ -123,33 +123,27 @@ if __name__ == '__main__':
 
     #평가기준
     score = 0
-    score_criteria1 = False #단순 체크
     score_criteria2 = 0 # 몇년간 상승했는지 체크
     for i in range(4):
         #순 부채 비율이 30%이하 인지
         if float(net_debt_ratio[i+1]) < 30:
-            score_criteria1 = True
-        else:
-            score_criteria1 = False
-        if score_criteria1:
+            score_criteria2 = score_criteria2 + 1
+        if score_criteria2 >= 3:
             score = score + 3
+            score_criteria2 = 0
         #투자활동 활동과 재무활동이 모두 + 인지
         if float(investment_activities[i+1]) > 0 and float(financial_activities[i+1]) > 0:
-            score_criteria1 = False
-        else:
-            score_criteria1 = True
-        if score_criteria1:
-            score = score + 3
+            score_criteria2 = score_criteria2 + 1
+        if score_criteria2 >= 3:
+            score = score - 3
+            score_criteria2 = 0
         # EPS와 ROE가 꾸준히 오르는가
         if float(EPS[i]) < float(EPS[i+1]) or float(ROE[i]) < float(ROE[i+1]):
             score_criteria2 = score_criteria2 + 1
-        if score_criteria2 > 3:
+        if score_criteria2 >= 3:
             score = score + 3
             score_criteria2 = 0
-        
     print(score)
-    
-        
 
 
 
