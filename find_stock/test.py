@@ -28,9 +28,10 @@ def get_data():
     # 데이터 베이스 테이블 결정
     metadata = db.MetaData()
     table = db.Table('stock_info',metadata,autoload=True,autoload_with=engine)
-    query = db.select([table]).where(table.columns.stock_name == "삼성전자")
+    query = db.select([table]).where(table.columns.stock_name == "KCC건설")
     result_proxy = connection.execute(query)
     result_set = result_proxy.fetchall()
+    print(result_set)
     return_data = {}
     for stock_info in result_set:
         try:
@@ -146,6 +147,7 @@ def get_data():
             }
             broswer.quit()
         except:
+            print("get_data_error")
             continue
     return return_data
 
@@ -162,6 +164,8 @@ def calculation_score(stock_data):
                     score = score + 3
                     score_criteria2 = 0
         except:
+            score_criteria2 = 0
+            print("net_debt_error")
             pass
         #투자활동 활동과 재무활동이 모두 + 인지
         try:
@@ -172,6 +176,8 @@ def calculation_score(stock_data):
                     score = score - 3
                     score_criteria2 = 0
         except:
+            score_criteria2 = 0
+            print("investment_activities_error")
             pass
         # EPS와 ROE가 꾸준히 오르는가
         try:
@@ -182,6 +188,8 @@ def calculation_score(stock_data):
                     score = score + 3
                     score_criteria2 = 0
         except:
+            score_criteria2 = 0
+            print("EPS_error")
             pass
         # 유동비율 ,당좌비율이 100%가 넘고 부채비율이 200%인지
         try:
@@ -192,6 +200,8 @@ def calculation_score(stock_data):
                     score = score + 3
                     score_criteria2 = 0
         except:
+            score_criteria2 = 0
+            print("currnet_liablility_error")
             pass
         
         # 영업이익률이, 매출이익률,당기이익률 계속 오르는지
@@ -203,6 +213,8 @@ def calculation_score(stock_data):
                     score = score + 3
                     score_criteria2 = 0
         except:
+            score_criteria2 = 0
+            print("sales_growth_rate_error")
             pass
         # 동종업계 평균보다 PER이 낮은가
         try:
@@ -213,6 +225,8 @@ def calculation_score(stock_data):
                     score = score + 3
                     score_criteria2 = 0
         except:
+            score_criteria2 = 0
+            print("PER_error")
             pass
         
 
