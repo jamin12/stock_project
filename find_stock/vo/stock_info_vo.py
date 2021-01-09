@@ -16,3 +16,5 @@ class StockInfo(Base):
 
     def __repr__(self):
         return "<stock_info('%s','%s','%s')>" %(self.stock_name,self.stock_code,self.stock_type)
+
+

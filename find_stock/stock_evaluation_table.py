@@ -1,8 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
-from openpyxl import load_workbook
-import sqlalchemy as db
+from dao import stock_info_dao
 
 
 #selenium으로 접속하는 방법
@@ -20,18 +19,10 @@ def into_selenium(url):
     broswer.get(url)
     return broswer
 
-def get_data():
-    #데이터 베이스 연결 설정
-    sqlalchemy_database_url = 'mysql+pymysql://root:1234@localhost:3306/stockproject'
-    engine = db.create_engine(sqlalchemy_database_url,echo=False)
-    connection = engine.connect()
-    # 데이터 베이스 테이블 결정
-    metadata = db.MetaData()
-    table = db.Table('stock_info',metadata,autoload=True,autoload_with=engine)
-    query = db.select([table]).where(table.columns.stock_name == "KCC건설")
-    result_proxy = connection.execute(query)
-    result_set = result_proxy.fetchall()
+def get_data(mylist = []):
+    result_set = stock_info_dao.stock_find_name(mylist)
     print(result_set)
+    return_datas = []
     return_data = {}
     for stock_info in result_set:
         try:
@@ -146,105 +137,116 @@ def get_data():
                 "stock_info":stock_info
             }
             broswer.quit()
+            return_datas.append(return_data)
         except:
             print("get_data_error")
             continue
-    return return_data
+    return return_datas
 
-def calculation_score(stock_data):
-                #평가기준
+def calculation_score(stock_datas):
+    for stock_data in stock_datas:
+        #평가기준
         score = 0
         score_criteria2 = 0 # 몇년간 상승했는지 체크
+        evaluation_value = []
         #순 부채 비율이 30%이하 인지
         try:
-            for i in range(4):
-                if float(stock_data["net_debt_ratio"][i+1]) < 30:
-                    score_criteria2 = score_criteria2 + 1
-                if score_criteria2 > 3:
-                    score = score + 3
-                    score_criteria2 = 0
+            if float(stock_data["net_debt_ratio"][-1]) < 30:
+                score = score + 3
+                evaluation_value.append("net_debt_ratio")
         except:
-            score_criteria2 = 0
             print("net_debt_error")
             pass
         #투자활동 활동과 재무활동이 모두 + 인지
         try:
-            for i in range(4):
+            for i in range(1,4):
                 if float(stock_data["investment_activities"][i+1]) > 0 and float(stock_data["financial_activities"][i+1]) > 0:
                     score_criteria2 = score_criteria2 + 1
-                if score_criteria2 >= 3:
+                if score_criteria2 >= 2:
                     score = score - 3
                     score_criteria2 = 0
+                    evaluation_value.append("investment_activities")
         except:
             score_criteria2 = 0
             print("investment_activities_error")
             pass
+        score_criteria2 = 0
         # EPS와 ROE가 꾸준히 오르는가
         try:
-            for i in range(4):
+            for i in range(1,4):
                 if float(stock_data["EPS"][i]) < float(stock_data["EPS"][i+1]) or float(stock_data["ROE"][i]) < float(stock_data["ROE"][i+1]):
                     score_criteria2 = score_criteria2 + 1
-                if score_criteria2 > 3:
+                if score_criteria2 > 2:
                     score = score + 3
                     score_criteria2 = 0
+                    evaluation_value.append("EPS")
         except:
             score_criteria2 = 0
             print("EPS_error")
             pass
+        score_criteria2 = 0
         # 유동비율 ,당좌비율이 100%가 넘고 부채비율이 200%인지
         try:
-            for i in range(4):
+            for i in range(1,4):
                 if (float(stock_data["current_liability_ratio"][i+1]) > 100 and float(stock_data["current_account_ratio"][i+1]) > 100) and float(stock_data["debt_ratio"][i+1]) < 200:
                     score_criteria2 = score_criteria2 + 1
-                if score_criteria2 > 3:
+                if score_criteria2 > 2:
                     score = score + 3
                     score_criteria2 = 0
+                    evaluation_value.append("current_liability_ratio")
         except:
             score_criteria2 = 0
             print("currnet_liablility_error")
             pass
         
-        # 영업이익률이, 매출이익률,당기이익률 계속 오르는지
+        score_criteria2 = 0
+        # 영업이익률이, 매출이익률,계속 오르는지
         try:
-            for i in range(4):
-                if (float(stock_data["sales_growth_rate"][i+1]) > 0 and float(stock_data["operating_profit_growth_rate"][i+1]) > 0) or float(stock_data["net_profit_growth_rate"][i+1]) > 0:
+            for i in range(1,4):
+                if (float(stock_data["sales_growth_rate"][i+1]) > 0 and float(stock_data["operating_profit_growth_rate"][i+1]) > 0):
                     score_criteria2 = score_criteria2 + 1
-                if score_criteria2 > 3:
+                if score_criteria2 > 2:
                     score = score + 3
                     score_criteria2 = 0
+                    evaluation_value.append("sales_growth_rate")
         except:
             score_criteria2 = 0
             print("sales_growth_rate_error")
             pass
-        # 동종업계 평균보다 PER이 낮은가
+        score_criteria2 = 0
+        #당기 수익률이 오르는지
         try:
-            for i in range(4):
-                if float(stock_data["PER"][4]) < float(stock_data["INDUSTRIES_AVG_PER"]):
+            for i in range(1,4):
+                if float(stock_data["net_profit_growth_rate"][i+1]) > 0:
                     score_criteria2 = score_criteria2 + 1
-                if score_criteria2 > 3:
+                if score_criteria2 > 2:
                     score = score + 3
                     score_criteria2 = 0
+                    evaluation_value.append("net_profit_growth_rate")
         except:
             score_criteria2 = 0
+            print("net_profit_growth_rate_error")
+            pass
+        score_criteria2 = 0
+        # 동종업계 평균보다 PER이 낮은가
+        try:
+            if float(stock_data["PER"][-1]) < float(stock_data["INDUSTRIES_AVG_PER"]):
+                score = score + 3
+                evaluation_value.append("PER")
+        except:
             print("PER_error")
             pass
-        
 
-        print(stock_data["stock_info"][0],":",(score/15)*100)
+        
+        print(stock_data["stock_info"][0],":",round((score/18)*100,2),evaluation_value)
+
 
 if __name__ == '__main__':
-    # #엑셀파일에서 종목 코드 찾기
-    # wb = load_workbook("./find_stock/stock_codenum.xlsm",data_only = True)
-    # ws = wb.active
-    # stock_code = ""
-    # for stocknum in ws.iter_rows(min_row=2):
-    #     if "ESR켄달스퀘어리츠" == stocknum[0].value:
-    #         stock_code = str(stocknum[4].value)
-    #         break
-
-    a = get_data()
+    a = get_data(["유니퀘스트","오리엔탈정공","케이사인"])
+    # print(a)
     calculation_score(a)
-    
+    # for i in range(1,4):
+    #     print(i)
 
 
 
