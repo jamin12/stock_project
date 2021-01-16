@@ -4,8 +4,8 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from sqlalchemy.orm import sessionmaker
 from db.stockproject_db import connect_database
-from vo.stock_info_vo import StockInfo
-from vo.user_vo import user
+from DTO.stock_info_vo import StockInfo
+from DTO.user_vo import user
 
 # 테이블을 조종할수 있는 세션 생성
 Session = sessionmaker(bind=connect_database())

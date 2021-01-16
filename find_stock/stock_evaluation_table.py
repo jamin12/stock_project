@@ -242,11 +242,13 @@ def calculation_score(stock_datas):
 
 
 if __name__ == '__main__':
-    a = get_data(["유니퀘스트","오리엔탈정공","케이사인"])
+    # a = get_data(["씨아이에스","일진머티리얼즈","포스코케미칼","에코프로비엠","삼화콘덴서","삼진엘앤디","피엔티"])
+    a = get_data(["대림산업","대우건설","kcc건설"])
     # print(a)
     calculation_score(a)
     # for i in range(1,4):
     #     print(i)
+
 
 
 

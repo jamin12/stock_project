@@ -39,7 +39,7 @@ def update_stock_database():
                 stock_lines[1]
             except:
                 break
-            for stock_line in enumerate(stock_lines):
+            for stock_line in stock_lines:
                 try:
                     #기업 이름
                     stock_name = stock_line.find_all('td')[1].text
