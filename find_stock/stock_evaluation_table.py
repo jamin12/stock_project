@@ -185,10 +185,10 @@ def calculation_score(stock_datas):
             print("EPS_error")
             pass
         score_criteria2 = 0
-        # 유동비율 ,당좌비율이 100%가 넘고 부채비율이 200%인지
+        # 유동비율 ,당좌비율이 100%가 넘고 
         try:
             for i in range(1,4):
-                if (float(stock_data["current_liability_ratio"][i+1]) > 100 and float(stock_data["current_account_ratio"][i+1]) > 100) and float(stock_data["debt_ratio"][i+1]) < 200:
+                if (float(stock_data["current_liability_ratio"][i+1]) > 100 and float(stock_data["current_account_ratio"][i+1]) > 100):
                     score_criteria2 = score_criteria2 + 1
                 if score_criteria2 > 2:
                     score = score + 3
@@ -198,7 +198,16 @@ def calculation_score(stock_datas):
             score_criteria2 = 0
             print("currnet_liablility_error")
             pass
-        
+        score_criteria2 = 0
+        #부채비율이 200%인지
+        try:
+            if float(stock_data["debt_ratio"][-1]) < 200:
+                score = score + 3
+                score_criteria2 = 0
+                evaluation_value.append("debt_ratio")
+        except:
+            print("debt_ratio_error")
+            pass
         score_criteria2 = 0
         # 영업이익률이, 매출이익률,계속 오르는지
         try:
@@ -238,12 +247,12 @@ def calculation_score(stock_datas):
             pass
 
         
-        print(stock_data["stock_info"][0],":",round((score/18)*100,2),evaluation_value)
+        print(stock_data["stock_info"][0],":",round((score/21)*100,2),evaluation_value)
 
 
 if __name__ == '__main__':
     # a = get_data(["씨아이에스","일진머티리얼즈","포스코케미칼","에코프로비엠","삼화콘덴서","삼진엘앤디","피엔티"])
-    a = get_data(["대림산업","대우건설","kcc건설"])
+    a = get_data(["알서포트","신테카바이오","코리아센터","데이타솔루션","아이즈비전","머큐리","오픈베이스","기가레인"])
     # print(a)
     calculation_score(a)
     # for i in range(1,4):
