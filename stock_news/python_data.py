@@ -80,6 +80,7 @@ if __name__ == "__main__":
     stock_news("삼성전자",0)
     
     # a.securities_information()
+    print('test')
     
     
     
