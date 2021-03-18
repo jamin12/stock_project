@@ -5,7 +5,7 @@ Base = declarative_base()
 
 class StockInfo(Base):
     __tablename__ = "stock_info"
-    stock_name = Column(String(45),primary_key=True)
+    stock_name = Column(String(45))
     stock_code = Column(String(45),primary_key=True)
     stock_type = Column(String(45))
 

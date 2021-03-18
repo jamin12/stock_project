@@ -15,7 +15,7 @@ def into_request(url):
 
 def update_stock_database():
     #데이터 베이스 연결 설정
-    sqlalchemy_database_url = 'mysql+pymysql://root:1234@localhost:3306/stockproject'
+    sqlalchemy_database_url = 'mysql+pymysql://root:qwer1234@localhost:3306/stockproject'
     engine = db.create_engine(sqlalchemy_database_url,echo=False)
     connection = engine.connect()
 
@@ -59,3 +59,8 @@ def update_stock_database():
                 except:
                     continue
             page = page + 1
+
+
+if __name__ == '__main__':
+    update_stock_database()
+    
