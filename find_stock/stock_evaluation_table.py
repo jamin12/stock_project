@@ -159,13 +159,9 @@ def calculation_score(stock_datas):
             pass
         #투자활동 활동과 재무활동이 모두 + 인지
         try:
-            for i in range(1,4):
-                if float(stock_data["investment_activities"][i+1]) > 0 and float(stock_data["financial_activities"][i+1]) > 0:
-                    score_criteria2 = score_criteria2 + 1
-                if score_criteria2 >= 2:
-                    score = score - 3
-                    score_criteria2 = 0
-                    evaluation_value.append("investment_activities")
+            if float(stock_data["investment_activities"][-1]) > 0 and float(stock_data["financial_activities"][-1]) > 0:
+                score = score + 3
+                evaluation_value.append("investment_activities")
         except:
             score_criteria2 = 0
             print("investment_activities_error")
@@ -176,7 +172,7 @@ def calculation_score(stock_datas):
             for i in range(1,4):
                 if float(stock_data["EPS"][i]) < float(stock_data["EPS"][i+1]) or float(stock_data["ROE"][i]) < float(stock_data["ROE"][i+1]):
                     score_criteria2 = score_criteria2 + 1
-                if score_criteria2 > 2:
+                if score_criteria2 >= 2:
                     score = score + 3
                     score_criteria2 = 0
                     evaluation_value.append("EPS")
@@ -187,13 +183,9 @@ def calculation_score(stock_datas):
         score_criteria2 = 0
         # 유동비율 ,당좌비율이 100%가 넘고 
         try:
-            for i in range(1,4):
-                if (float(stock_data["current_liability_ratio"][i+1]) > 100 and float(stock_data["current_account_ratio"][i+1]) > 100):
-                    score_criteria2 = score_criteria2 + 1
-                if score_criteria2 > 2:
-                    score = score + 3
-                    score_criteria2 = 0
-                    evaluation_value.append("current_liability_ratio")
+            if (float(stock_data["current_liability_ratio"][-1]) > 100 and float(stock_data["current_account_ratio"][-1]) > 100):
+                score = score + 3
+                evaluation_value.append("current_liability_ratio")
         except:
             score_criteria2 = 0
             print("currnet_liablility_error")
@@ -214,7 +206,7 @@ def calculation_score(stock_datas):
             for i in range(1,4):
                 if (float(stock_data["sales_growth_rate"][i+1]) > 0 and float(stock_data["operating_profit_growth_rate"][i+1]) > 0):
                     score_criteria2 = score_criteria2 + 1
-                if score_criteria2 > 2:
+                if score_criteria2 >= 2:
                     score = score + 3
                     score_criteria2 = 0
                     evaluation_value.append("sales_growth_rate")
@@ -228,7 +220,7 @@ def calculation_score(stock_datas):
             for i in range(1,4):
                 if float(stock_data["net_profit_growth_rate"][i+1]) > 0:
                     score_criteria2 = score_criteria2 + 1
-                if score_criteria2 > 2:
+                if score_criteria2 >= 2:
                     score = score + 3
                     score_criteria2 = 0
                     evaluation_value.append("net_profit_growth_rate")
@@ -252,12 +244,12 @@ def calculation_score(stock_datas):
 
 if __name__ == '__main__':
     # a = get_data(["씨아이에스","일진머티리얼즈","포스코케미칼","에코프로비엠","삼화콘덴서","삼진엘앤디","피엔티"])
-    a = get_data(["에이프로","LG이노텍","예스티","아이에이","KEC","광전자"])
+    a = get_data(["맥스로텍","휴림로봇","TPC","한국테크놀로지","디오","세중","로보스타","코렌텍","하이비젼시스템"])
     # print(a)
     calculation_score(a)
     # for i in range(1,4):ㄴ
     #     print(i)
-
+    #에이프로
 
 
 
